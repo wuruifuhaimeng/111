@@ -14,4 +14,15 @@ env/
 
 # OS
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# AL Project specific
+.alcache/
+.alpackages/
+.snapshots/
+.output/
+*.app
+rad.json
+*.g.xlf
+*.flf
+TestResults.xml
