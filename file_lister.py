@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 import sys
+import json
 
 def get_file_info(file_path):
     """获取文件信息"""
@@ -10,7 +11,7 @@ def get_file_info(file_path):
     return {
         'name': file_path.name,
         'size': stat.st_size,
-        'modified': datetime.fromtimestamp(stat.st_mtime),
+        'modified': datetime.fromtimestamp(stat.st_mtime).strftime('%Y-%m-%d %H:%M:%S'),
         'is_dir': file_path.is_dir()
     }
 
@@ -56,18 +57,8 @@ def main():
     
     files = list_files(args.directory, args.sort_by, args.reverse)
     
-    print(f"\n目录: {args.directory}")
-    print("-" * 80)
-    print(f"{'名称':<40} {'大小':<10} {'修改时间':<20}")
-    print("-" * 80)
-    
-    for file in files:
-        name = file['name']
-        if file['is_dir']:
-            name = f"[目录] {name}"
-        size = format_size(file['size'])
-        modified = file['modified'].strftime('%Y-%m-%d %H:%M:%S')
-        print(f"{name:<40} {size:<10} {modified:<20}")
+    # 输出JSON格式
+    print(json.dumps(files, ensure_ascii=False))
 
 if __name__ == '__main__':
     main() 
